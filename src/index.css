@@ -13,6 +13,10 @@ body {
     display: table;
   }
   
+  .selected {
+    font-weight: bold;
+  }
+
   .status {
     margin-bottom: 10px;
   }
@@ -43,6 +47,8 @@ body {
   .game {
     display: flex;
     flex-direction: row;
+    justify-content: center;
+
   }
   
   .game-info {
