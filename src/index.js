@@ -85,7 +85,6 @@ class Game extends React.Component {
       xIsNext: (step % 2) === 0,
     });
 
-
     for (let element of document.getElementsByClassName("selected")) {
       element.classList.remove("selected");
     }
