@@ -20,26 +20,14 @@ class Board extends React.Component {
     );
   }
 
-  renderRow(row) {
-    const squares = [];
-    for (let s = 0; s < 3; s++) {
-      squares.push(
-        this.renderSquare(row * 3 + s)
-      );
-    }
-    return (
-      <div className="board-row">
-        {squares}
-      </div>
-    )
-  }
-
   render() {
-    const board = [];
-    for (let i = 0; i < 3; i++) {
-      board.push(
-        this.renderRow(i)
-      );
+    let board = [];
+    for(let i = 0; i < 3; i++){
+      let row = [];
+      for(let j = 0; j < 3; j++){
+        row.push(<span key={(i * 3) + j}>{this.renderSquare((i * 3) + j)}</span>);
+      }
+      board.push(<div className="board-row" key={i}>{row}</div>);
     }
 
     return (
@@ -60,6 +48,7 @@ class Game extends React.Component {
       location: Array(9).fill(null),
       stepNumber: 0,
       xIsNext: true,
+      descending: true,
     };
   }
 
@@ -123,13 +112,28 @@ class Game extends React.Component {
     }
   }
 
+  handleToggle() {
+    this.setState({
+      descending: !this.state.descending,
+    });
+
+    let toggle = document.getElementById("toggleButton");
+
+    if (this.state.descending) {
+      toggle.innerHTML = "Moves Descending";
+    } else {
+      toggle.innerHTML = "Moves Ascending";
+    }
+
+  }
+
   render() {
     const history = this.state.history;
     const location = this.state.location;
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
 
-    const moves = history.map((step, move) => {
+    let moves = history.map((step, move) => {
       const desc = move ?
       'Go to move #' + move + ":" + this.getLocation(location[move - 1]):
       'Go to game start';
@@ -139,6 +143,10 @@ class Game extends React.Component {
         </li>
       );
     });
+
+    if (!this.state.descending) {
+      moves = moves.reverse();
+    }
 
     let status;
     if (winner) {
@@ -160,6 +168,10 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div>{status}</div>
+          <button id='toggleButton' className='toggle' 
+            onClick={() => this.handleToggle()}>
+          Moves Descending
+          </button>
           <ol>{moves}</ol>
         </div>
       </div>

@@ -39,6 +39,11 @@ body {
   .square:focus {
     outline: none;
   }
+
+  .toggle {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
   
   .kbd-navigation .square:focus {
     background: #ddd;
